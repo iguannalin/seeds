@@ -3,6 +3,18 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
 
+let colors = [
+  "rgb(240, 249, 33)",
+  "rgb(253, 197, 39)",
+  "rgb(248, 149, 64)",
+  "rgb(230, 108, 92)",
+  "rgb(204, 71, 120)",
+  "rgb(170, 35, 149)",
+  "rgb(126, 3, 168)",
+  "rgb(76, 2, 161)",
+  "rgb(13, 8, 135)"
+]
+
 window.addEventListener("load", () => {
   const input = document.getElementById('prompt');
   input.oninput = onType;
@@ -22,26 +34,14 @@ window.addEventListener("load", () => {
       if (!e || !e.data) seedling = 0;
       else seedling = e.target.value;
       seed = new Math.seedrandom(seedling);
-      petals = Math.floor(Math.min(seed() * 10, 100)); 
+      petals = Math.floor(Math.min(seed() * 15, 100)); 
       d = Math.floor(360 / petals);
       scene.clear();
       // console.log(seedling, petals);
       makeFlower();
     }
 
-  // ORBIT CONTROLS
-  // const controls = new OrbitControls(camera, renderer.domElement);
-
-  //controls.update() must be called after any manual changes to the camera's transform
-  // camera.position.set( 0, 20, 100 );
-  // controls.update();
-  // let petals = [];
-  const Group = new THREE.Group();
   let petalGroup = [];
-
-  // function clearPetals() {
-  //   petalGroup.forEach((p) => )
-  // }
 
   function makePetal(x, y, z, r) {
     const pgeometry = new THREE.CircleGeometry( 5, 50, 0, 0.5 ); 
@@ -58,10 +58,9 @@ window.addEventListener("load", () => {
   
   function makeFlower() {
     const geometry = new THREE.CircleGeometry( 5, 50 ); 
-    const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } ); 
+    const material = new THREE.MeshBasicMaterial( { color: new THREE.Color(colors[ Math.floor((colors.length)-1 % Math.max(petals, 1)) ]) } ); 
     const circle = new THREE.Mesh( geometry, material );
     circle.position.z = -100;
-    // Group.position.z = -100;
     scene.add(circle)
     
     if (!petals) return;
@@ -70,18 +69,12 @@ window.addEventListener("load", () => {
       let y = 5 * (Math.sin(i));
       makePetal(x, y, -100, i);
     }
-
-    // scene.add( Group );
   }
 
   let angle = 0;
 
   function animate() {
     requestAnimationFrame( animate );
-    // controls.update();
-    // Group.rotateZ(angle);
-    // if (angle >= 360) angle = 0;
-    // else angle += d;
     petalGroup.forEach((p, a) => p.rotateZ(0.05));
     renderer.render( scene, camera );
   }

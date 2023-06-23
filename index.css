@@ -14,12 +14,13 @@ html {
 
 body {
   margin: 0 auto;
+  display: flex;
+  justify-content: center;
 }
 
 .container {
   position: absolute;
   top: 25%;
-  left: 27%;
 }
 
 input {
