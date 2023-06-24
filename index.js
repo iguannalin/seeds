@@ -58,7 +58,8 @@ window.addEventListener("load", () => {
   
   function makeFlower() {
     const geometry = new THREE.CircleGeometry( 5, 50 ); 
-    const material = new THREE.MeshBasicMaterial( { color: new THREE.Color(colors[ Math.floor((colors.length)-2 % Math.max(petals, 1)) ]) } ); 
+    console.log(petals, Math.floor(colors.length % Math.max(petals, 1)));
+    const material = new THREE.MeshBasicMaterial( { color: new THREE.Color(colors[ Math.floor(colors.length % Math.max(petals, 1)) ]) } ); 
     const circle = new THREE.Mesh( geometry, material );
     circle.position.z = -100;
     scene.add(circle)
@@ -75,7 +76,7 @@ window.addEventListener("load", () => {
 
   function animate() {
     requestAnimationFrame( animate );
-    petalGroup.forEach((p, a) => p.rotateZ(0.05));
+    petalGroup.forEach((p, a) => p.rotateZ(0.025));
     renderer.render( scene, camera );
   }
 
