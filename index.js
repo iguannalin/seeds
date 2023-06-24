@@ -58,7 +58,7 @@ window.addEventListener("load", () => {
   
   function makeFlower() {
     const geometry = new THREE.CircleGeometry( 5, 50 ); 
-    const material = new THREE.MeshBasicMaterial( { color: new THREE.Color(colors[ Math.floor((colors.length)-1 % Math.max(petals, 1)) ]) } ); 
+    const material = new THREE.MeshBasicMaterial( { color: new THREE.Color(colors[ Math.floor((colors.length)-2 % Math.max(petals, 1)) ]) } ); 
     const circle = new THREE.Mesh( geometry, material );
     circle.position.z = -100;
     scene.add(circle)
